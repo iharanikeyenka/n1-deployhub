@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Rocket } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Rocket } from "lucide-react";
 
 interface LoginScreenProps {
   onSignIn: () => void;

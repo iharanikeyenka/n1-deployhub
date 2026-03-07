@@ -1,6 +1,6 @@
-import { useAuth } from '@/hooks/useAuth';
-import { LoginScreen } from '@/components/LoginScreen';
-import { Dashboard } from '@/components/Dashboard';
+import { useAuth } from "@/hooks/useAuth";
+import { LoginScreen } from "@/components/LoginScreen";
+import { Dashboard } from "@/components/Dashboard";
 
 const Index = () => {
   const { session, loading, signInWithSlack, signOut } = useAuth();

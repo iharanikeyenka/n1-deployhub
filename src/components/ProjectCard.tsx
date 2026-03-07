@@ -1,15 +1,28 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from 'sonner';
-import { Rocket, ArrowRightLeft, Hammer } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
+import { Rocket, ArrowRightLeft, Hammer, GitBranch } from "lucide-react";
+import { sendSlackCommand } from "@/lib/slack";
 
 interface ProjectCardProps {
+  id: string;
   name: string;
 }
 
-export function ProjectCard({ name }: ProjectCardProps) {
-  const handleAction = (action: string) => {
-    toast.info(`Sending command ${action} for ${name} to Slack...`);
+export function ProjectCard({ id, name }: ProjectCardProps) {
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const handleAction = async (action: string, label: string) => {
+    setLoading(action);
+    try {
+      await sendSlackCommand(id, action);
+      toast.success(`✅ ${label} sent for ${name}`);
+    } catch (err: any) {
+      toast.error(`❌ Failed: ${err.message}`);
+    } finally {
+      setLoading(null);
+    }
   };
 
   return (
@@ -17,26 +30,41 @@ export function ProjectCard({ name }: ProjectCardProps) {
       <CardHeader>
         <CardTitle className="text-lg">{name}</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        <Button onClick={() => handleAction('Full Deploy')} className="w-full">
+      <CardContent className="flex flex-col gap-2">
+        <Button
+          onClick={() => handleAction("full_deploy", "Full Deploy")}
+          className="w-full"
+          disabled={!!loading}
+        >
           <Rocket className="mr-2 h-4 w-4" />
-          Full Deploy
+          {loading === "full_deploy" ? "Sending..." : "🔴 Full Deploy"}
         </Button>
         <Button
           variant="secondary"
-          onClick={() => handleAction('CMS Transfer')}
+          onClick={() => handleAction("cms", "CMS Transfer")}
           className="w-full"
+          disabled={!!loading}
         >
           <ArrowRightLeft className="mr-2 h-4 w-4" />
-          CMS Transfer
+          {loading === "cms" ? "Sending..." : "🔴 CMS Transfer"}
         </Button>
         <Button
           variant="outline"
-          onClick={() => handleAction('Build')}
-          className="w-full border-success text-success hover:bg-success/10"
+          onClick={() => handleAction("deploy_master", "Deploy Master")}
+          className="w-full"
+          disabled={!!loading}
         >
-          <Hammer className="mr-2 h-4 w-4" />
-          Build
+          <Rocket className="mr-2 h-4 w-4" />
+          {loading === "deploy_master" ? "Sending..." : "🟠 Deploy Master"}
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => handleAction("deploy_develop", "Deploy Develop")}
+          className="w-full border-yellow-400 text-yellow-600 hover:bg-yellow-50"
+          disabled={!!loading}
+        >
+          <GitBranch className="mr-2 h-4 w-4" />
+          {loading === "deploy_develop" ? "Sending..." : "🟡 Deploy Develop"}
         </Button>
       </CardContent>
     </Card>
