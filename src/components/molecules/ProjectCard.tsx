@@ -38,7 +38,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       action: 'full_deploy',
       label: 'Full Deploy',
       icon: <Rocket className="h-3 w-3" />,
-      className: 'bg-[#e8192c] text-white hover:bg-[#ff2236] hover:shadow-[0_0_12px_rgba(232,25,44,0.4)]',
+      className: 'bg-[#e8192c] text-white hover:bg-[#ff2236] hover:shadow-[0_0_16px_rgba(232,25,44,0.4)]',
       available: !!(project.cmd_cms && project.cmd_deploy_master),
     },
     {
@@ -46,7 +46,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       label: 'CMS Transfer',
       icon: <DatabaseZap className="h-3 w-3" />,
       className:
-        'bg-[#202026] text-[#c8c8d8] border border-[#2a2a32] hover:bg-[#26262e] hover:border-[#3a3a44] hover:text-white',
+        'bg-[#1e2a3a] text-[#7eb8f7] border border-[#2a3f58] hover:bg-[#243248] hover:border-[#3a5578] hover:text-[#a8d4ff]',
       available: !!project.cmd_cms,
     },
     {
@@ -54,7 +54,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       label: 'Deploy Master',
       icon: <GitMerge className="h-3 w-3" />,
       className:
-        'bg-transparent text-orange-400 border border-orange-500/30 hover:bg-orange-500/10 hover:border-orange-500/50',
+        'bg-[#2a1f00] text-[#f5a623] border border-[#4a3800] hover:bg-[#332500] hover:border-[#6b5200] hover:text-[#ffc14d]',
       available: !!project.cmd_deploy_master,
     },
     {
@@ -62,7 +62,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       label: 'Deploy Develop',
       icon: <GitPullRequest className="h-3 w-3" />,
       className:
-        'bg-transparent text-yellow-400 border border-yellow-500/30 hover:bg-yellow-500/10 hover:border-yellow-500/50',
+        'bg-[#002a1e] text-[#2dd4a0] border border-[#004d38] hover:bg-[#003828] hover:border-[#007a58] hover:text-[#5eedc0]',
       available: !!project.cmd_deploy_develop,
     },
   ];
@@ -82,9 +82,11 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     >
       <div className="h-[2px] w-full bg-[#e8192c] opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
 
-      <h3 className="font-display text-[13px] font-bold uppercase px-4 pt-4 pb-3 tracking-wide text-white leading-tight">
-        {project.name}
-      </h3>
+      <div className="flex items-start justify-between px-4 pt-4 pb-3">
+        <h3 className="font-display text-[13px] font-bold uppercase tracking-wide text-white leading-tight">
+          {project.name}
+        </h3>
+      </div>
 
       <div className="mx-4 h-px bg-[#2a2a32]" />
 
