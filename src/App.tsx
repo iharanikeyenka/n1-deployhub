@@ -1,10 +1,13 @@
-import { Toaster } from "@/components/atoms/toaster.tsx";
-import { Toaster as Sonner } from "@/components/atoms/sonner.tsx";
-import { TooltipProvider } from "@/components/atoms/tooltip.tsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import { Toaster as Sonner } from '@/components/atoms/sonner.tsx';
+import { Toaster } from '@/components/atoms/toaster.tsx';
+import { TooltipProvider } from '@/components/atoms/tooltip.tsx';
+
+import Index from './pages/Index';
+import NotFound from './pages/NotFound';
 
 const queryClient = new QueryClient();
 

@@ -1,7 +1,8 @@
-import { Session } from "@supabase/supabase-js";
-import { Header } from "@/components/organisms/Header";
-import { ProjectGrid } from "@/components/organisms/ProjectGrid";
-import { useProjects } from "@/box";
+import { useProjects } from '@/box';
+import { Session } from '@supabase/supabase-js';
+
+import { Header } from '@/components/organisms/Header';
+import { ProjectGrid } from '@/components/organisms/ProjectGrid';
 
 interface DashboardProps {
   session: Session;

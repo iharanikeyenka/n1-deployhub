@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { Session } from "@supabase/supabase-js";
-import { supabase } from "@/box";
+import { useEffect, useState } from 'react';
+
+import { supabase } from '@/box';
+import { Session } from '@supabase/supabase-js';
 
 interface UseAuthResult {
   session: Session | null;
@@ -31,8 +32,8 @@ export function useAuth(): UseAuthResult {
 
   const signInWithSlack = async (): Promise<void> => {
     await supabase.auth.signInWithOAuth({
-      provider: "slack_oidc",
-      options: { scopes: "openid profile email" },
+      provider: 'slack_oidc',
+      options: { scopes: 'openid profile email' },
     });
   };
 

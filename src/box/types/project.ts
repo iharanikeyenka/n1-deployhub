@@ -8,15 +8,11 @@ export interface Project {
   cmd_deploy_develop: string | null;
 }
 
-export type DeployAction =
-  | "full_deploy"
-  | "cms"
-  | "deploy_master"
-  | "deploy_develop";
+export type DeployAction = 'full_deploy' | 'cms' | 'deploy_master' | 'deploy_develop';
 
 export interface DeployActionConfig {
   action: DeployAction;
   label: string;
-  variant: "default" | "secondary" | "outline";
+  variant: 'default' | 'secondary' | 'outline';
   colorClass?: string;
 }

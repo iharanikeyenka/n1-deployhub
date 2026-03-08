@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { fetchProjects } from "@/box/services/project.service.ts";
-import type { Project } from "@/box/types/project.ts";
+import { useEffect, useState } from 'react';
+
+import { fetchProjects } from '@/box/services/project.service.ts';
+import type { Project } from '@/box/types/project.ts';
 
 interface UseProjectsResult {
   projects: Project[];
