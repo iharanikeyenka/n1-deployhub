@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck — Deno runtime, Node/TS LSP doesn't support it yet
-import { DeployAction, Project } from '@/box';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -8,6 +7,15 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+type DeployAction = 'full_deploy' | 'cms' | 'deploy_master' | 'deploy_develop';
+
+interface Project {
+  name: string;
+  cmd_cms: string | null;
+  cmd_deploy_master: string | null;
+  cmd_deploy_develop: string | null;
+}
 
 interface RequestBody {
   project_id: string;
