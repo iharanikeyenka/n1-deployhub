@@ -3,6 +3,7 @@ export interface Project {
   name: string;
   slack_channel_id: string;
   sort_order: number;
+  group: string | null;
   cmd_cms: string | null;
   cmd_deploy_master: string | null;
   cmd_deploy_develop: string | null;
