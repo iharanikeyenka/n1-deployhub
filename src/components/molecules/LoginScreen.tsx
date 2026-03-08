@@ -1,6 +1,4 @@
-import { Rocket } from 'lucide-react';
-
-import { Button } from '@/components/atoms/button.tsx';
+import { SlackIcon } from 'lucide-react';
 
 interface LoginScreenProps {
   onSignIn: () => void;
@@ -8,19 +6,35 @@ interface LoginScreenProps {
 
 export function LoginScreen({ onSignIn }: LoginScreenProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-8 p-8">
-        <div className="flex items-center gap-3">
-          <Rocket className="h-10 w-10 text-primary" />
-          <h1 className="text-4xl font-bold tracking-tight text-foreground">Deployer Dashboard</h1>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#111113]">
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse 60% 50% at 68% 50%, rgba(232,25,44,0.07) 0%, transparent 70%)',
+        }}
+      />
+
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col items-center gap-10 px-8 animate-fade-up">
+        <div className="flex flex-col items-center gap-2">
+          <img src="/logo.svg" alt="N1 Partners" className="h-10 w-auto" />
+          <span className="font-display text-[10px] font-bold uppercase tracking-widest-3 text-white">Deploy Hub</span>
         </div>
-        <p className="text-muted-foreground text-lg">Manage your deployments in one place</p>
-        <Button size="lg" className="mt-4 gap-3 px-8 py-6 text-lg" onClick={onSignIn}>
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-            <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.124 2.521a2.528 2.528 0 0 1 2.52-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.52V8.834zm-1.271 0a2.528 2.528 0 0 1-2.521 2.521 2.528 2.528 0 0 1-2.521-2.521V2.522A2.528 2.528 0 0 1 15.166 0a2.528 2.528 0 0 1 2.521 2.522v6.312zm-2.521 10.124a2.528 2.528 0 0 1 2.521 2.52A2.528 2.528 0 0 1 15.166 24a2.528 2.528 0 0 1-2.521-2.522v-2.52h2.521zm0-1.271a2.528 2.528 0 0 1-2.521-2.521 2.528 2.528 0 0 1 2.521-2.521h6.312A2.528 2.528 0 0 1 24 15.166a2.528 2.528 0 0 1-2.522 2.521h-6.312z" />
-          </svg>
+        <button
+          onClick={onSignIn}
+          className="flex items-center gap-3 rounded bg-[#e8192c] px-10 py-4 font-display text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-[#ff2236] hover:shadow-[0_0_28px_rgba(232,25,44,0.45)] active:scale-[0.98]"
+        >
+          <SlackIcon />
           Sign in with Slack
-        </Button>
+        </button>
       </div>
     </div>
   );

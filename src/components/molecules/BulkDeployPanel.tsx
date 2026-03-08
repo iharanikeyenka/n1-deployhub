@@ -148,7 +148,6 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
 
   return (
     <div className="rounded-lg border border-border bg-card">
-      {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-3">
           <h3 className="font-semibold text-foreground">Bulk Deploy</h3>
@@ -169,7 +168,6 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
         </div>
       </div>
 
-      {/* Group list */}
       <div className="divide-y divide-border">
         {[...grouped.entries()].map(([groupName, groupProjects]) => {
           const groupIds = groupProjects.map((p) => p.id);
@@ -180,7 +178,6 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
 
           return (
             <Collapsible key={groupName} open={isOpen}>
-              {/* Group row */}
               <div className="flex items-center gap-3 px-4 py-2.5 bg-muted/30">
                 <div
                   onClick={() => toggleGroup(groupProjects)}
@@ -228,16 +225,6 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
                         onClick={(e) => e.stopPropagation()}
                       />
                       <span className="flex-1 text-sm text-foreground">{project.name}</span>
-                      {/* Available actions dots */}
-                      <div className="flex gap-1">
-                        {project.cmd_cms && <span className="h-1.5 w-1.5 rounded-full bg-red-400" title="CMS" />}
-                        {project.cmd_deploy_master && (
-                          <span className="h-1.5 w-1.5 rounded-full bg-orange-400" title="Master" />
-                        )}
-                        {project.cmd_deploy_develop && (
-                          <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" title="Develop" />
-                        )}
-                      </div>
                     </div>
                   ))}
                 </div>

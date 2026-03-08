@@ -90,6 +90,14 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
+    fontFamily: {
+      display: ['Montserrat', 'sans-serif'],
+      body: ['Inter', 'sans-serif'],
+    },
+    letterSpacing: {
+      'widest-2': '0.18em',
+      'widest-3': '0.22em',
+    },
   },
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;

@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$red: #e8192c;
+$red-hover: #ff2236;
+$red-dark: #b01020;
+$red-glow-sm: 0 0 12px rgba(232, 25, 44, 0.3);
+$red-glow-md: 0 0 24px rgba(232, 25, 44, 0.35);
+$red-glow-lg: 0 0 40px rgba(232, 25, 44, 0.5);
+
+$bg: #111113;
+$bg-card: #1a1a1e;
+$bg-raised: #202026;
+$bg-overlay: #26262e;
+$border: #2a2a32;
+$border-subtle: #222228;
+$fg: #ffffff;
+$fg-muted: #8a8a9a;
+$fg-dim: #c8c8d8;
+
+$orange: #ff6b2b;
+$yellow: #f5c518;
+
+$font-display: 'Montserrat', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+$radius-sm: 4px;
+$radius: 6px;
+$radius-lg: 10px;
+
+@mixin font-display($weight: 800) {
+  font-family: $font-display;
+  font-weight: $weight;
+  text-transform: uppercase;
+}
+
+@mixin red-glow($size: md) {
+  @if $size == sm {
+    box-shadow: $red-glow-sm;
+  }
+  @if $size == md {
+    box-shadow: $red-glow-md;
+  }
+  @if $size == lg {
+    box-shadow: $red-glow-lg;
+  }
+}
+
+@mixin card-base {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $radius;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba($red, 0.4);
+    box-shadow:
+      0 0 0 1px rgba($red, 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+  }
+}
+
+@mixin btn-red {
+  background: $red;
+  color: $fg;
+  border: none;
+  border-radius: $radius-sm;
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: $red-hover;
+    @include red-glow(sm);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+@mixin btn-ghost {
+  background: transparent;
+  color: $fg-muted;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  font-family: $font-body;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    color: $fg;
+    border-color: rgba($fg, 0.25);
+    background: $bg-raised;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer base {
+  :root {
+    --background: 240 5% 7%;
+    --foreground: 0 0% 100%;
+    --card: 240 4% 11%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 4% 11%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 354 82% 51%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 13%;
+    --secondary-foreground: 240 5% 85%;
+    --muted: 240 4% 13%;
+    --muted-foreground: 240 4% 55%;
+    --accent: 354 82% 51%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 4% 17%;
+    --input: 240 4% 17%;
+    --ring: 354 82% 51%;
+    --radius: #{$radius};
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --surface-raised: #{$bg-raised};
+    --surface-overlay: #{$bg-overlay};
+    --n1-red: #{$red};
+    --sidebar-background: 240 5% 6%;
+    --sidebar-foreground: 240 5% 80%;
+    --sidebar-primary: 354 82% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 13%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 4% 13%;
+    --sidebar-ring: 354 82% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: $font-body;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+
+    &::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.018;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: $font-display;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+}
+
+.n1-card {
+  @include card-base;
+}
+
+.n1-btn-red {
+  @include btn-red;
+}
+
+.n1-btn-ghost {
+  @include btn-ghost;
+}
+
+// Red top border accent on cards
+.n1-card-accent {
+  @include card-base;
+  border-top: 2px solid $red;
+}
+
+.n1-badge-live {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+.n1-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $border 30%, $border 70%, transparent);
+}
+
+.n1-red-line {
+  display: inline-block;
+  width: 2rem;
+  height: 3px;
+  background: $red;
+  border-radius: 2px;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.35s ease forwards;
+}
+
+@for $i from 1 through 6 {
+  .animate-delay-#{$i} {
+    animation-delay: #{$i * 0.05}s;
+  }
+}
