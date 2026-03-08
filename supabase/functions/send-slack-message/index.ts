@@ -36,7 +36,6 @@ serve(async (req: Request) => {
 
     if (action === 'full_deploy') {
       if (project.cmd_cms) messages.push(project.cmd_cms);
-      if (project.cmd_deploy_master) messages.push(project.cmd_deploy_master);
     } else if (action === 'cms') {
       if (project.cmd_cms) messages.push(project.cmd_cms);
     } else if (action === 'deploy_master') {
