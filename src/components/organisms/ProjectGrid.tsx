@@ -15,6 +15,11 @@ interface ProjectGridProps {
 
 type ViewMode = 'grid' | 'bulk';
 
+const VIEW_MODES: { mode: ViewMode; label: string; icon: React.ReactNode }[] = [
+  { mode: 'grid', label: 'Single', icon: <LayoutGrid className="h-3 w-3" /> },
+  { mode: 'bulk', label: 'Bulk', icon: <ListChecks className="h-3 w-3" /> },
+];
+
 export function ProjectGrid({ projects, loading }: ProjectGridProps) {
   const [search, setSearch] = useState('');
   const [mode, setMode] = useState<ViewMode>('grid');
@@ -26,21 +31,12 @@ export function ProjectGrid({ projects, loading }: ProjectGridProps) {
 
   return (
     <main className="container mx-auto px-6 py-8">
-      {/* Toolbar */}
       <div className="mb-8 flex flex-wrap items-center gap-4">
         <div className="flex items-baseline gap-3">
-          <h2
-            style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, letterSpacing: '0.04em' }}
-            className="text-xl uppercase text-white"
-          >
-            Projects
-          </h2>
-          <span style={{ fontFamily: "'Inter', sans-serif" }} className="text-sm text-[#8a8a9a]">
-            {loading ? '…' : filtered.length}
-          </span>
+          <h2 className="font-display text-xl font-black uppercase tracking-wide text-white">Projects</h2>
+          <span className="font-body text-sm text-[#8a8a9a]">{loading ? '…' : filtered.length}</span>
         </div>
 
-        {/* Search */}
         <div className="relative max-w-xs flex-1">
           <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#8a8a9a]" />
           <Input
@@ -51,25 +47,22 @@ export function ProjectGrid({ projects, loading }: ProjectGridProps) {
           />
         </div>
 
-        {/* Mode toggle */}
-        <div className="ml-auto flex items-center overflow-hidden rounded border border-[#2a2a32] bg-[#202026]">
-          {(['grid', 'bulk'] as ViewMode[]).map((m) => (
+        <div className="ml-auto flex overflow-hidden rounded border border-[#2a2a32] bg-[#202026]">
+          {VIEW_MODES.map(({ mode: m, label, icon }) => (
             <button
               key={m}
               onClick={() => setMode(m)}
-              style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, letterSpacing: '0.05em' }}
-              className={`flex items-center gap-1.5 px-4 py-2 text-[11px] uppercase transition-all ${
+              className={`flex items-center gap-1.5 px-4 py-2 font-display text-[11px] font-bold uppercase tracking-widest transition-all ${
                 mode === m ? 'bg-[#e8192c] text-white' : 'text-[#8a8a9a] hover:text-white'
               }`}
             >
-              {m === 'grid' ? <LayoutGrid className="h-3 w-3" /> : <ListChecks className="h-3 w-3" />}
-              {m === 'grid' ? 'Single' : 'Bulk'}
+              {icon}
+              {label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Content */}
       {loading ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (

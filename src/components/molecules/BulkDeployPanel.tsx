@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
-import { DeployAction, Project, sendSlackCommand } from '@/box';
-import { ChevronDown, ChevronRight, GitBranch, Rocket, Square, SquareCheck } from 'lucide-react';
+import { DeployAction, Project, getAllActionDefs, sendSlackCommand } from '@/box';
+import { ChevronDown, ChevronRight, Square, SquareCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Badge } from '@/components/atoms/badge';
@@ -12,42 +12,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 interface BulkDeployPanelProps {
   projects: Project[];
 }
-
-interface ActionDef {
-  action: DeployAction;
-  label: string;
-  icon: React.ReactNode;
-  variant: 'default' | 'secondary' | 'outline';
-  className?: string;
-}
-
-const ACTION_DEFS: ActionDef[] = [
-  {
-    action: 'full_deploy',
-    label: '🔴 Full Deploy',
-    icon: <Rocket className="h-3.5 w-3.5" />,
-    variant: 'default',
-  },
-  {
-    action: 'cms',
-    label: '🔴 CMS Transfer',
-    icon: <Rocket className="h-3.5 w-3.5" />,
-    variant: 'secondary',
-  },
-  {
-    action: 'deploy_master',
-    label: '🟠 Deploy Master',
-    icon: <Rocket className="h-3.5 w-3.5" />,
-    variant: 'outline',
-  },
-  {
-    action: 'deploy_develop',
-    label: '🟡 Deploy Develop',
-    icon: <GitBranch className="h-3.5 w-3.5" />,
-    variant: 'outline',
-    className: 'border-yellow-400 text-yellow-600 hover:bg-yellow-50 dark:hover:bg-yellow-950',
-  },
-];
 
 function isActionAvailable(project: Project, action: DeployAction): boolean {
   if (action === 'full_deploy') return !!(project.cmd_cms && project.cmd_deploy_master);
@@ -61,6 +25,8 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [pending, setPending] = useState<DeployAction | null>(null);
   const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(['alfa', 'bravo']));
+
+  const buttons = getAllActionDefs();
 
   const grouped = useMemo(() => {
     const map = new Map<string, Project[]>();
@@ -234,15 +200,13 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
         })}
       </div>
 
-      {/* Action buttons */}
       <div className="flex flex-wrap gap-2 border-t border-border px-4 py-3">
-        {ACTION_DEFS.map(({ action, label, icon, variant, className }) => (
+        {buttons.map(({ action, label, icon, className }) => (
           <Button
             key={action}
-            variant={variant}
             size="sm"
             disabled={pending !== null || selectedCount === 0}
-            className={`gap-1.5 text-xs ${className ?? ''}`}
+            className={`gap-1.5 text-xs ${className}`}
             onClick={() => handleBulkAction(action, label)}
           >
             {icon}
