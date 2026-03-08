@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import type { DeployAction, Project } from '@/box';
+import type { Project } from '@/box';
 import { DatabaseZap, GitMerge, GitPullRequest, Rocket } from 'lucide-react';
 
 export interface ActionDef {
@@ -9,6 +9,13 @@ export interface ActionDef {
   icon: ReactNode;
   className: string;
   available: boolean;
+}
+
+export enum DeployAction {
+  FULL_DEPLOY = 'full_deploy',
+  CMS = 'cms',
+  DEPLOY_MASTER = 'deploy_master',
+  DEPLOY_DEVELOP = 'deploy_develop',
 }
 
 const ACTION_STYLES = [

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { DeployAction, Project, getAllActionDefs, sendSlackCommand } from '@/box';
+import { DeployAction, Project, getAllActionDefs, getEligibleTargets, sendSlackCommand } from '@/box';
 import { ChevronDown, ChevronRight, Square, SquareCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -11,14 +11,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 
 interface BulkDeployPanelProps {
   projects: Project[];
-}
-
-function isActionAvailable(project: Project, action: DeployAction): boolean {
-  if (action === 'full_deploy') return !!(project.cmd_cms && project.cmd_deploy_master);
-  if (action === 'cms') return !!project.cmd_cms;
-  if (action === 'deploy_master') return !!project.cmd_deploy_master;
-  if (action === 'deploy_develop') return !!project.cmd_deploy_develop;
-  return false;
 }
 
 export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
@@ -80,7 +72,7 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
       return;
     }
 
-    const targets = projects.filter((p) => selected.has(p.id) && isActionAvailable(p, action));
+    const targets = getEligibleTargets(projects, selected, action);
 
     if (targets.length === 0) {
       toast.warning(`No selected projects support "${label}"`);

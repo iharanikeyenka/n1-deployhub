@@ -1,3 +1,5 @@
+import { DeployAction } from '@/box';
+
 export interface Project {
   id: string;
   name: string;
@@ -8,8 +10,6 @@ export interface Project {
   cmd_deploy_master: string | null;
   cmd_deploy_develop: string | null;
 }
-
-export type DeployAction = 'full_deploy' | 'cms' | 'deploy_master' | 'deploy_develop';
 
 export interface DeployActionConfig {
   action: DeployAction;
