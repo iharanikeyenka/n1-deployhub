@@ -1,9 +1,8 @@
-import { DeployAction } from '@/box';
+import { DeployAction } from '@/box/constants/actions';
 
 export interface Project {
   id: string;
   name: string;
-  slack_channel_id: string;
   sort_order: number;
   group: string | null;
   cmd_cms: string | null;

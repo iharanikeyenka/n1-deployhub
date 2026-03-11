@@ -1,4 +1,4 @@
-import type { DeployAction } from '@/box/types/project.ts';
+import type { DeployAction } from '@/box/constants/actions';
 
 import { supabase } from './supabase.ts';
 
