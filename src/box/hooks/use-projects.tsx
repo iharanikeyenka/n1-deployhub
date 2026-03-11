@@ -1,12 +1,13 @@
-import { fetchProjects } from '@/box/services/project.service.ts';
-import type { Project } from '@/box/types/project.ts';
+import { fetchProjects } from '@/box/services/project.service';
+import type { Project } from '@/box/types/project';
 import { useQuery } from '@tanstack/react-query';
+import type { QueryObserverResult } from '@tanstack/react-query';
 
 interface UseProjectsResult {
   projects: Project[];
   loading: boolean;
   error: string | null;
-  refetch: () => void;
+  refetch: () => Promise<QueryObserverResult<Project[], Error>>;
 }
 
 export function useProjects(): UseProjectsResult {

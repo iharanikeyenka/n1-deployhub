@@ -1,4 +1,5 @@
-import { DeployAction, Project } from '@/box';
+import { DeployAction } from '@/box/constants/actions';
+import type { Project } from '@/box/types/project';
 
 export function isActionAvailable(project: Project, action: DeployAction): boolean {
   switch (action) {

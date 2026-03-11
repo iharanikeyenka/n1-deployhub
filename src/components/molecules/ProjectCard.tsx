@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
 import { DeployAction, Project, getProjectActionDefs, sendSlackCommand } from '@/box';
 import { Loader2 } from 'lucide-react';
@@ -7,14 +7,6 @@ import { toast } from 'sonner';
 interface ProjectCardProps {
   project: Project;
   index?: number;
-}
-
-interface ActionButton {
-  action: DeployAction;
-  label: string;
-  icon: ReactNode;
-  className: string;
-  available: boolean;
 }
 
 export function ProjectCard({ project, index = 0 }: ProjectCardProps) {

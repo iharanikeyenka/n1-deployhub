@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { DeployAction, Project, getAllActionDefs, getEligibleTargets, sendSlackCommand } from '@/box';
+import { DeployAction, Project, getBulkActionDefs, getEligibleTargets, sendSlackCommand } from '@/box';
 import { ChevronDown, ChevronRight, Square, SquareCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -14,12 +14,6 @@ interface BulkDeployPanelProps {
 }
 
 export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [pending, setPending] = useState<DeployAction | null>(null);
-  const [openGroups, setOpenGroups] = useState<Set<string>>(() => new Set(grouped.keys()));
-
-  const buttons = getAllActionDefs();
-
   const grouped = useMemo(() => {
     const map = new Map<string, Project[]>();
     for (const p of projects) {
@@ -27,10 +21,18 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(p);
     }
-
     return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
   }, [projects]);
 
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [pending, setPending] = useState<DeployAction | null>(null);
+
+  useEffect(() => {
+    setOpenGroups(new Set(grouped.keys()));
+  }, [grouped]);
+
+  const buttons = getBulkActionDefs();
   const toggleProject = (id: string) => {
     setSelected((prev) => {
       const next = new Set(prev);
@@ -39,6 +41,8 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
       return next;
     });
   };
+
+  const eligibleCount = (action: DeployAction): number => getEligibleTargets(projects, selected, action).length;
 
   const toggleGroup = (groupProjects: Project[]) => {
     const groupIds = groupProjects.map((p) => p.id);
@@ -197,7 +201,7 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
           <Button
             key={action}
             size="sm"
-            disabled={pending !== null || selectedCount === 0}
+            disabled={pending !== null || selectedCount === 0 || eligibleCount(action) === 0}
             className={`gap-1.5 text-xs ${className}`}
             onClick={() => handleBulkAction(action, label)}
           >
