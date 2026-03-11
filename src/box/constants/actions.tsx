@@ -53,4 +53,4 @@ const ACTION_STYLES = [
 ];
 
 export const getActionDefs = (): Omit<ActionDef, 'available'>[] =>
-    ACTION_STYLES.map(({ getAvailable: _, ...rest }) => rest);
+  ACTION_STYLES.map(({ getAvailable: _, ...rest }) => rest);

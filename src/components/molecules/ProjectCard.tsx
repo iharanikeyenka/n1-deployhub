@@ -25,7 +25,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     }
   };
 
-    const buttons = getActionDefs().filter((b) => isActionAvailable(project, b.action));
+  const buttons = getActionDefs().filter((b) => isActionAvailable(project, b.action));
   const delayClass = `animate-delay-${Math.min((index % 6) + 1, 6)}`;
 
   return (

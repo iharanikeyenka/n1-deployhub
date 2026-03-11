@@ -32,7 +32,7 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
     setOpenGroups(new Set(grouped.keys()));
   }, [grouped]);
 
-    const buttons = getActionDefs();
+  const buttons = getActionDefs();
   const toggleProject = (id: string) => {
     setSelected((prev) => {
       const next = new Set(prev);
