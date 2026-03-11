@@ -52,11 +52,5 @@ const ACTION_STYLES = [
   },
 ];
 
-export const getBulkActionDefs = (): Omit<ActionDef, 'available'>[] =>
-  ACTION_STYLES.map(({ getAvailable: _, ...rest }) => rest);
-
-export const getProjectActionDefs = (project: Project): ActionDef[] =>
-  ACTION_STYLES.map(({ getAvailable, ...rest }) => ({
-    ...rest,
-    available: getAvailable(project),
-  }));
+export const getActionDefs = (): Omit<ActionDef, 'available'>[] =>
+    ACTION_STYLES.map(({ getAvailable: _, ...rest }) => rest);

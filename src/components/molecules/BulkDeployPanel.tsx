@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { DeployAction, Project, getBulkActionDefs, getEligibleTargets, sendSlackCommand } from '@/box';
+import { DeployAction, Project, getActionDefs, getEligibleTargets, sendSlackCommand } from '@/box';
 import { ChevronDown, ChevronRight, Square, SquareCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -32,7 +32,7 @@ export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
     setOpenGroups(new Set(grouped.keys()));
   }, [grouped]);
 
-  const buttons = getBulkActionDefs();
+    const buttons = getActionDefs();
   const toggleProject = (id: string) => {
     setSelected((prev) => {
       const next = new Set(prev);

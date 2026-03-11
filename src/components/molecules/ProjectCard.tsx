@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { DeployAction, Project, getProjectActionDefs, sendSlackCommand } from '@/box';
+import { DeployAction, Project, getActionDefs, isActionAvailable, sendSlackCommand } from '@/box';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -25,7 +25,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     }
   };
 
-  const buttons = getProjectActionDefs(project).filter((b) => b.available);
+    const buttons = getActionDefs().filter((b) => isActionAvailable(project, b.action));
   const delayClass = `animate-delay-${Math.min((index % 6) + 1, 6)}`;
 
   return (
