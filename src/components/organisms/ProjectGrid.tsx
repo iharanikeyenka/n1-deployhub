@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 
 import type { Project } from '@/box';
 import { LayoutGrid, ListChecks, Search } from 'lucide-react';
@@ -11,16 +11,18 @@ import { ProjectCard } from '@/components/molecules/ProjectCard';
 interface ProjectGridProps {
   projects: Project[];
   loading: boolean;
+  error: string | null;
+  onRetry: () => void;
 }
 
 type ViewMode = 'grid' | 'bulk';
 
-const VIEW_MODES: { mode: ViewMode; label: string; icon: React.ReactNode }[] = [
+const VIEW_MODES: { mode: ViewMode; label: string; icon: ReactNode }[] = [
   { mode: 'grid', label: 'Single', icon: <LayoutGrid className="h-3 w-3" /> },
   { mode: 'bulk', label: 'Bulk', icon: <ListChecks className="h-3 w-3" /> },
 ];
 
-export function ProjectGrid({ projects, loading }: ProjectGridProps) {
+export function ProjectGrid({ projects, loading, error, onRetry }: ProjectGridProps) {
   const [search, setSearch] = useState('');
   const [mode, setMode] = useState<ViewMode>('grid');
 
@@ -28,6 +30,22 @@ export function ProjectGrid({ projects, loading }: ProjectGridProps) {
     () => projects.filter((p) => p.name.toLowerCase().includes(search.toLowerCase())),
     [projects, search],
   );
+
+  if (error) {
+    return (
+      <main className="container mx-auto px-6 py-8">
+        <div className="flex flex-col items-center gap-4 py-20 text-center">
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <button
+            onClick={onRetry}
+            className="rounded border border-[#2a2a32] px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-[#8a8a9a] transition-all hover:border-[#e8192c]/40 hover:text-white"
+          >
+            Retry
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="container mx-auto px-6 py-8">

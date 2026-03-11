@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react';
-
 import { fetchProjects } from '@/box/services/project.service.ts';
 import type { Project } from '@/box/types/project.ts';
+import { useQuery } from '@tanstack/react-query';
 
 interface UseProjectsResult {
   projects: Project[];
   loading: boolean;
   error: string | null;
+  refetch: () => void;
 }
 
 export function useProjects(): UseProjectsResult {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+    retry: 2,
+    staleTime: 30_000,
+  });
 
-  useEffect(() => {
-    fetchProjects()
-      .then(setProjects)
-      .catch((err: Error) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  return { projects, loading, error };
+  return {
+    projects: data ?? [],
+    loading: isLoading,
+    error: error instanceof Error ? error.message : null,
+    refetch,
+  };
 }

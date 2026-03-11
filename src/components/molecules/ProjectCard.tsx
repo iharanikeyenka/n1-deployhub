@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 
-import { DeployAction, Project, sendSlackCommand } from '@/box';
-import { DatabaseZap, GitMerge, GitPullRequest, Loader2, Rocket } from 'lucide-react';
+import { DeployAction, Project, getProjectActionDefs, sendSlackCommand } from '@/box';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ProjectCardProps {
@@ -33,41 +33,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     }
   };
 
-  const buttons: ActionButton[] = [
-    {
-      action: 'full_deploy',
-      label: 'Full Deploy',
-      icon: <Rocket className="h-3 w-3" />,
-      className: 'bg-[#e8192c] text-white hover:bg-[#ff2236] hover:shadow-[0_0_16px_rgba(232,25,44,0.4)]',
-      available: !!(project.cmd_cms && project.cmd_deploy_master),
-    },
-    {
-      action: 'cms',
-      label: 'CMS Transfer',
-      icon: <DatabaseZap className="h-3 w-3" />,
-      className:
-        'bg-[#1e2a3a] text-[#7eb8f7] border border-[#2a3f58] hover:bg-[#243248] hover:border-[#3a5578] hover:text-[#a8d4ff]',
-      available: !!project.cmd_cms,
-    },
-    {
-      action: 'deploy_master',
-      label: 'Deploy Master',
-      icon: <GitMerge className="h-3 w-3" />,
-      className:
-        'bg-[#2a1f00] text-[#f5a623] border border-[#4a3800] hover:bg-[#332500] hover:border-[#6b5200] hover:text-[#ffc14d]',
-      available: !!project.cmd_deploy_master,
-    },
-    {
-      action: 'deploy_develop',
-      label: 'Deploy Develop',
-      icon: <GitPullRequest className="h-3 w-3" />,
-      className:
-        'bg-[#002a1e] text-[#2dd4a0] border border-[#004d38] hover:bg-[#003828] hover:border-[#007a58] hover:text-[#5eedc0]',
-      available: !!project.cmd_deploy_develop,
-    },
-  ];
-
-  const visibleButtons = buttons.filter((b) => b.available);
+  const buttons = getProjectActionDefs(project).filter((b) => b.available);
   const delayClass = `animate-delay-${Math.min((index % 6) + 1, 6)}`;
 
   return (
@@ -91,7 +57,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       <div className="mx-4 h-px bg-[#2a2a32]" />
 
       <div className="flex flex-col gap-1.5 px-4 pb-4 pt-3">
-        {visibleButtons.map(({ action, label, icon, className }) => (
+        {buttons.map(({ action, label, icon, className }) => (
           <button
             key={action}
             disabled={pending !== null}

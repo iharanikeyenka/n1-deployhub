@@ -16,7 +16,7 @@ interface BulkDeployPanelProps {
 export function BulkDeployPanel({ projects }: BulkDeployPanelProps) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [pending, setPending] = useState<DeployAction | null>(null);
-  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(['alfa', 'bravo']));
+  const [openGroups, setOpenGroups] = useState<Set<string>>(() => new Set(grouped.keys()));
 
   const buttons = getAllActionDefs();
 

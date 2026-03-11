@@ -10,12 +10,12 @@ interface DashboardProps {
 }
 
 export function Dashboard({ session, onSignOut }: DashboardProps) {
-  const { projects, loading } = useProjects();
+  const { projects, loading, error, refetch } = useProjects();
 
   return (
     <div className="min-h-screen bg-background">
       <Header session={session} onSignOut={onSignOut} />
-      <ProjectGrid projects={projects} loading={loading} />
+      <ProjectGrid projects={projects} loading={loading} error={error} onRetry={refetch} />
     </div>
   );
 }

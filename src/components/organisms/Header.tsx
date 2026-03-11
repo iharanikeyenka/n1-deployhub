@@ -10,12 +10,12 @@ export function Header({ session, onSignOut }: HeaderProps) {
   const userName =
     session.user.user_metadata?.full_name ?? session.user.user_metadata?.name ?? session.user.email ?? session.user.id;
 
-  const avatar = session.user.user_metadata?.avatar_url as string | undefined;
+  const rawAvatar = session.user.user_metadata?.avatar_url;
+  const avatar = typeof rawAvatar === 'string' ? rawAvatar : undefined;
 
   return (
     <header className="relative z-10 border-b border-[#2a2a32] bg-[#111113]">
       <div className="container mx-auto flex items-center justify-between px-6 py-3">
-        {/* Logo */}
         <div className="flex items-center gap-3">
           <img src="/logo.svg" alt="N1 Partners" className="h-7 w-auto" />
           <div className="h-5 w-px bg-[#2a2a32]" />
